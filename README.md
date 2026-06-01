@@ -19,7 +19,7 @@ tags: [ Sommersemester2026, Softwareentwicklung, Übung04]
 
 -->
 
-[![LiaScript Course](https://raw.githubusercontent.com/LiaScript/LiaScript/master/badges/course.svg)](https://liascript.github.io/course/?https://raw.githubusercontent.com/Ifi-Softwareentwicklung-SoSe2026/exercise_04/refs/heads/main/README.md)
+[![LiaScript Course](https://raw.githubusercontent.com/LiaScript/LiaScript/master/badges/course.svg)](https://liascript.github.io/course/?https://raw.githubusercontent.com/Ifi-Softwareentwicklung-SoSe2026/exercise-04-smn-hrtzsch/refs/heads/main/README.md)
 
 #  Aufgabe 04
 
@@ -426,22 +426,33 @@ Hier bitte den Code aus `robots_exercise` in ein UML Diagramm überführen.
 interface ISerializer {
   + SpeichernAlsJSON(dateipfad: string): void
   + SpeichernAlsCSV(dateipfad: string): void
+  {static} + LadenAusJSON(dateipfad: string): Roboter
+  {static} + LadenAusCSV(dateipfad: string): Roboter
 }
 
 class Roboter {
   + Name: string
   + Typ: string
   + Energielevel: int
+  + Roboter()
+  + Roboter(name: string, typ: string, energielevel: int)
+  + SpeichernAlsJSON(dateipfad: string): void
+  {static} + LadenAusJSON(dateipfad: string): Roboter
+  + SpeichernAlsCSV(dateipfad: string): void
+  {static} + LadenAusCSV(dateipfad: string): Roboter
   + GetStatus(): string
   + Activate(): void
 }
 
 class Lieferroboter {
-  + Lieferkapazität: string
+  + Lieferkapazität: int
+  + Lieferroboter()
+  + Lieferroboter(name: string, energielevel: int, lieferkapazität: int)
   + GetStatus(): string
 }
 
 Roboter ..|> ISerializer
+Roboter <|-- Lieferroboter
 
 @enduml
 ```
