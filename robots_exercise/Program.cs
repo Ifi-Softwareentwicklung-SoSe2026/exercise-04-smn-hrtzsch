@@ -57,11 +57,11 @@ class Program
         if (istLieferroboter)
         {
             int lieferkapazitaet = RandomGenerator.Next(1, 51);
-            return new Lieferroboter(name, energielevel, lieferkapazitaet);
+            return RoboterFactory.ErzeugeLieferroboter(name, energielevel, lieferkapazitaet);
         }
 
         string typ = StandardTypen[RandomGenerator.Next(0, StandardTypen.Length)];
-        return new Roboter(name, typ, energielevel);
+        return RoboterFactory.ErzeugeRoboter(name, typ, energielevel);
     }
 
     private static void GibStatusAus(IEnumerable<Roboter> roboter)
