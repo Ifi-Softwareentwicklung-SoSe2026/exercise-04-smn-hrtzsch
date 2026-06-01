@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 [JsonPolymorphic(TypeDiscriminatorPropertyName = "$type")]
 [JsonDerivedType(typeof(Roboter), "roboter")]
 [JsonDerivedType(typeof(Lieferroboter), "lieferroboter")]
-public class Roboter : ISerializer
+public class Roboter
 {
     public Roboter(string name, string typ, int energielevel)
     {
@@ -21,26 +21,6 @@ public class Roboter : ISerializer
     public string Name { get; set; }
     public string Typ { get; set; } // z. B. "Lieferroboter", "Schwimmroboter", etc.
     public int Energielevel { get; set; }
-
-    public void SpeichernAlsCSV(string dateipfad)
-    {
-        new CsvRoboterSerializer().Speichern(this, dateipfad);
-    }
-
-    public static Roboter LadenAusCSV(string dateipfad)
-    {
-        return new CsvRoboterSerializer().Laden(dateipfad);
-    }
-
-    public void SpeichernAlsJSON(string dateipfad)
-    {
-        new JsonRoboterSerializer().Speichern(this, dateipfad);
-    }
-
-    public static Roboter LadenAusJSON(string dateipfad)
-    {
-        return new JsonRoboterSerializer().Laden(dateipfad);
-    }
 
     public virtual string GetStatus()
     {

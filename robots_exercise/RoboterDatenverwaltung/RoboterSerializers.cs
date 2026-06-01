@@ -21,7 +21,8 @@ public class CsvRoboterSerializer : IRoboterSerializer
 
         if (typ == "Lieferroboter" && werte.Length > 3)
         {
-            return new Lieferroboter(name, energielevel, 0);
+            int lieferkapazitaet = int.Parse(werte[3]);
+            return new Lieferroboter(name, energielevel, lieferkapazitaet);
         }
 
         return new Roboter(name, typ, energielevel);
