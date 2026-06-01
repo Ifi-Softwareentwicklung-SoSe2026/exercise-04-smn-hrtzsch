@@ -57,11 +57,11 @@ class Program
         if (istLieferroboter)
         {
             int lieferkapazitaet = RandomGenerator.Next(1, 51);
-            return new Lieferroboter(name, energielevel, lieferkapazitaet);
+            return RoboterFactory.ErzeugeLieferroboter(name, energielevel, lieferkapazitaet);
         }
 
         string typ = StandardTypen[RandomGenerator.Next(0, StandardTypen.Length)];
-        return new Roboter(name, typ, energielevel);
+        return RoboterFactory.ErzeugeRoboter(name, typ, energielevel);
     }
 
     private static void GibStatusAus(IEnumerable<Roboter> roboter)
@@ -85,8 +85,8 @@ class Program
             string csvPfad = Path.Combine(ordner, $"{basisname}.csv");
             string jsonPfad = Path.Combine(ordner, $"{basisname}.json");
 
-            einzelnerRoboter.SpeichernAlsCSV(csvPfad);
-            einzelnerRoboter.SpeichernAlsJSON(jsonPfad);
+            new RoboterRepository(new CsvRoboterSerializer()).Speichern(einzelnerRoboter, csvPfad);
+            new RoboterRepository(new JsonRoboterSerializer()).Speichern(einzelnerRoboter, jsonPfad);
             index++;
         }
     }
@@ -109,7 +109,7 @@ class Program
         return Directory
             .GetFiles(ordner, "*.csv")
             .OrderBy(datei => datei)
-            .Select(Roboter.LadenAusCSV)
+            .Select(datei => new RoboterRepository(new CsvRoboterSerializer()).Laden(datei))
             .ToList();
     }
 
@@ -118,7 +118,7 @@ class Program
         return Directory
             .GetFiles(ordner, "*.json")
             .OrderBy(datei => datei)
-            .Select(Roboter.LadenAusJSON)
+            .Select(datei => new RoboterRepository(new JsonRoboterSerializer()).Laden(datei))
             .ToList();
     }
 }

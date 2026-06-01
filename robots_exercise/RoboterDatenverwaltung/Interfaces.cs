@@ -1,9 +1,7 @@
 namespace RoboterDatenverwaltung;
 
-public interface ISerializer
+public interface IRoboterSerializer
 {
-    void SpeichernAlsJSON(string dateipfad);
-    static abstract Roboter LadenAusJSON(string dateipfad);
-    void SpeichernAlsCSV(string dateipfad);
-    static abstract Roboter LadenAusCSV(string dateipfad);
+    void Speichern(Roboter roboter, string dateipfad);
+    Roboter Laden(string dateipfad);
 }
