@@ -467,8 +467,47 @@ Hier soll das überarbeitete UML Diagramm zum Code in `robots_exercise` erstellt
 ```text @plantUML
 @startuml
 
-Arbeiten Sie hier !!!
+interface IRoboterSerializer {
+  + Speichern(roboter: Roboter, dateipfad: string): void
+  + Laden(dateipfad: string): Roboter
+}
+
+class CsvRoboterSerializer {
+  + Speichern(roboter: Roboter, dateipfad: string): void
+  + Laden(dateipfad: string): Roboter
+}
+
+class RoboterRepository {
+  - serializer: CsvRoboterSerializer
+  + Speichern(roboter: Roboter, dateipfad: string): void
+  + Laden(dateipfad: string): Roboter
+}
+
+class RoboterFactory {
+  + ErzeugeRoboter(name: string, typ: string, energielevel: int): Roboter
+  + ErzeugeLieferroboter(name: string, energielevel: int, lieferkapazität: int): Lieferroboter
+}
+
+class Roboter {
+  + Name: string
+  + Typ: string
+  + Energielevel: int
+  + GetStatus(): string
+  + Activate(): void
+}
+
+class Lieferroboter {
+  + Lieferkapazität: int
+  + GetStatus(): string
+}
+
+CsvRoboterSerializer ..|> IRoboterSerializer
+RoboterRepository --> CsvRoboterSerializer
+RoboterFactory --> Roboter
+Roboter <|-- Lieferroboter
 
 @enduml
 ```
 @plantUML.eval(png)
+
+Die Zielarchitektur trennt Erzeugung, Persistenz und Domänenmodell. Dadurch sollen neue Robotertypen und Dateiformate leichter ergänzt werden können. Die Serialisierung soll perspektivisch austauschbar sein, damit CSV und JSON nicht mehr direkt in der Domänenklasse `Roboter` implementiert werden müssen.
