@@ -423,7 +423,25 @@ Hier bitte den Code aus `robots_exercise` in ein UML Diagramm überführen.
 ```text @plantUML
 @startuml
 
-Arbeiten Sie hier !!!
+interface ISerializer {
+  + SpeichernAlsJSON(dateipfad: string): void
+  + SpeichernAlsCSV(dateipfad: string): void
+}
+
+class Roboter {
+  + Name: string
+  + Typ: string
+  + Energielevel: int
+  + GetStatus(): string
+  + Activate(): void
+}
+
+class Lieferroboter {
+  + Lieferkapazität: string
+  + GetStatus(): string
+}
+
+Roboter ..|> ISerializer
 
 @enduml
 ```
@@ -443,4 +461,3 @@ Arbeiten Sie hier !!!
 @enduml
 ```
 @plantUML.eval(png)
-
