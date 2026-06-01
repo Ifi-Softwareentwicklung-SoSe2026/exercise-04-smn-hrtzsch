@@ -69,7 +69,7 @@ public class Roboter : ISerializer
 
     public virtual string GetStatus()
     {
-        return $"Roboter - Name: {Name}, Typ: {Typ}, Energielevel: {Energielevel}";
+        return "Absichtlich falsche Testabgabe ohne UML-Dokumentation";
     }
 
     public virtual void Activate()
